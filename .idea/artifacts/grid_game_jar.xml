@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="grid-game:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/grid_game_jar</output-path>
+    <root id="archive" name="grid-game.jar">
+      <element id="module-output" name="grid-game" />
+    </root>
+  </artifact>
+</component>
