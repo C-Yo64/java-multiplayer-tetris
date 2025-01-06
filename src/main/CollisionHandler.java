@@ -9,16 +9,14 @@ import java.util.List;
 public class CollisionHandler {
 
     GamePanel gp;
-    //now we are also going to save the tile manager
     TileManager tileManager;
 
-    //tile manager is now a parameter
+
     public CollisionHandler(GamePanel gp, TileManager tileManager) {
         this.gp = gp;
         this.tileManager = tileManager;
     }
 
-    // Method to check if any corner of the player's bounding box is colliding with a collidable tile
     public boolean isColliding(int posX, int posY, int size, List<Point> squares, List<PlacedBlock> placedBlocks) {
         int tileSize = gp.tileSize;
 
@@ -43,6 +41,7 @@ public class CollisionHandler {
                 return true;
             }
 
+            // Return true if the position of the square is the same as the position of one of the placed squares
             for (PlacedBlock block : placedBlocks) {
                 for (Point placedSquare : block.getAbsoluteSquares()) {
                     if (squareX == placedSquare.x && squareY == placedSquare.y) {
@@ -52,6 +51,7 @@ public class CollisionHandler {
             }
         }
 
+        // If nothing returns true, return false
         return false;
     }
 
@@ -62,6 +62,6 @@ public class CollisionHandler {
             int tileNum = tileManager.mapTileNum[row][col];
             return tileManager.tiles[tileNum].collision;
         }
-        return false; // Out of bounds (treat as non-collidable for safety)
+        return false; // Out of bounds (treat as non-collidable)
     }
 }

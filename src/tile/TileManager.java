@@ -15,6 +15,7 @@ public class TileManager {
     public int[][] mapTileNum;
 
     public TileManager(GamePanel gp) {
+        // Load the tiles from the map
         this.gp = gp;
         tiles = new Tile[2];
         mapTileNum = new int[gp.screenHeight / gp.tileSize][gp.screenWidth / gp.tileSize];
@@ -23,7 +24,7 @@ public class TileManager {
     }
 
     private void loadTiles() {
-
+        // Set the color and collision settings for the different tile types
         tiles[0] = new Tile();
         tiles[0].collision = false;
         tiles[0].color = Color.lightGray;
@@ -34,13 +35,16 @@ public class TileManager {
     }
 
     private void loadMap(String filePath) {
+        // Load the tiles and their types from a text file
+
         System.out.println("loading map from " + filePath);
         try {
+            // Read the file
             InputStream is = getClass().getResourceAsStream(filePath);
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
+            // Iterate through each line of text and add tiles in that line for each number
             int row = 0;
-
             String line;
             while (row < mapTileNum.length && (line = br.readLine()) != null) {
                 String[] numbers = line.split(" ");
@@ -59,6 +63,7 @@ public class TileManager {
 
 
     public void draw(Graphics2D g2) {
+        // Draw the tiles to the screen
         for (int row = 0; row < mapTileNum.length; row++) {
             for (int col = 0; col < mapTileNum[row].length; col++) {
                 int tileNum = mapTileNum[row][col];

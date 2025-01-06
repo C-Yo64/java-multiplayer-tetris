@@ -6,22 +6,13 @@ import main.Network;
 
 import java.awt.event.*;
 
-//we want to implement the interface called KeyListener
-//which is a class that listens for interactions with
-//your keyboard. In order to implement this interface
-//we need to override several methods seen below
 public class KeyHandler implements KeyListener {
 
-    //we are going to give access to the variables from
-    //our gamepanel, just like we did for the player
     GamePanel gp;
     Player player;
     Network network;
     Menu menu;
 
-
-    //lets make our constructor and require the GamePanel
-    //as a parameter when creating our KeyHandler object
     public KeyHandler(GamePanel gp, Player player, Menu menu) {
         this.gp = gp;
         this.player = player;
@@ -29,9 +20,6 @@ public class KeyHandler implements KeyListener {
         this.menu = menu;
     }
 
-
-    //This one deals with typing, which we are going
-    //to leave blank for this project
     @Override
     public void keyTyped(KeyEvent e) {
     }
@@ -39,11 +27,14 @@ public class KeyHandler implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
 
+        // Get the key that was pressed
         int code = e.getKeyCode();
 
+        // The actions that are available change based on if the player is in game or in the menu
         switch (gp.gameState) {
             case "menu":
                 switch (code) {
+                    // Navigate through the menu
                     case KeyEvent.VK_W, KeyEvent.VK_UP:
                         menu.changeOption("up");
                         break;
@@ -57,6 +48,7 @@ public class KeyHandler implements KeyListener {
                 break;
             case "game":
                 switch (code) {
+                    // Move the block
                     case KeyEvent.VK_A:
                         player.moveBlock("left");
                         break;
@@ -67,27 +59,25 @@ public class KeyHandler implements KeyListener {
                         player.moveBlock("down");
                         break;
 
-                    case KeyEvent.VK_W:
-//                lastPressedKey = "up";
-//                        player.moveBlock("down");
-//                        break;
+                    // Rotate the block
                     case KeyEvent.VK_R:
                         player.rotateBlock();
                         break;
 
+                    // If in single player, exit to the main menu
                     case KeyEvent.VK_ESCAPE:
                         if (!network.connected) {
                             menu.disconnected();
                         }
                         break;
 
+                    // Drop the current block
                     case KeyEvent.VK_SPACE:
-//                        player.randomizeBlock();
-//                        player.ghostBlock();
                         player.dropBlock();
                         break;
 
 
+                    // If playing multiplayer on the same computer and you are the host (when hosting the localhost IP is always 127.0.0.1), send inputs to the other player
                     case KeyEvent.VK_LEFT:
                         if (network.connected && network.serverSocket != null && network.clientSocket.getInetAddress().toString().equals("/127.0.0.1")) {
                             network.sendMessage(network.out, "left");
@@ -114,6 +104,8 @@ public class KeyHandler implements KeyListener {
                         }
                         break;
 
+
+                    // testing code
                     case KeyEvent.VK_1:
 //                        player.grayLines(1);
                         break;
@@ -143,26 +135,6 @@ public class KeyHandler implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
 
-        //we copy the above contents and change the booleans to
-        //false when the key gets released.
-        int code = e.getKeyCode();
-
-//        if (code == KeyEvent.VK_A) {
-//            leftP = false;
-//            lastPressedKey = null;
-//        }
-//        if (code == KeyEvent.VK_D) {
-//            rightP = false;
-//            lastPressedKey = null;
-//        }
-//        if (code == KeyEvent.VK_S) {
-//            downP = false;
-//            lastPressedKey = null;
-//        }
-//        if (code == KeyEvent.VK_W) {
-//            upP = false;
-//            lastPressedKey = null;
-//        }
     }
 
 }
